@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solvr</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- MathLive -->
+    <script src="https://unpkg.com/mathlive"></script>
+    <!-- Desmos -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://www.desmos.com/api/v1.6/core.js"></script>
+    <script src="https://www.desmos.com/api/v1.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <link rel="icon" href="static/logo.ico" type="image/x-icon" />
+    <script src="{{ url_for('static', filename='js_co/index.js') }}"></script>
+  </head>
+  <body>
+    <div class="layout-container">
+      <header class="header">
+        <nav class="navbar">
+          <div class="logo">
+            <img
+              src="{{ url_for('static', filename='logo.png') }}"
+              alt="Logo"
+            />
+            <h1>
+              <a class="inicio" href="{{ url_for('inicio') }}">
+              Solvr
+              </a>
+            </h1>
+          </div>
+          <ul class="nav-links">
+            <li>
+              <a href="{{ url_for('inicio') }}"
+                ><i class="fas fa-home"></i> Inicio</a
+              >
+            </li>
+            <li class="dropdown">
+              <a href="#">
+                <i class="fas fa-calculator"></i> Calcular
+                <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="dropdown-content">
+                <a href="{{ url_for('sistemas_ecuaciones') }}">
+                  <i class="fas fa-project-diagram"></i> Sistema de ecuaciones
+                </a>
+                <a href="{{ url_for('raices') }}">
+                  <i class="fas fa-square-root-alt"></i> Raíces de una función
+                </a>
+                <a href="{{ url_for('integracion') }}">
+                  <i class="fas fa-chart-area"></i> Integración numérica
+                </a>
+                <a href="{{ url_for('edo') }}">
+                  <i class="fas fa-wave-square"></i> Ecuaciones diferenciales
+                </a>
+              </div>
+            </li>
+            <li>
+              <a href="{{ url_for('teoria') }}">
+                <i class="fas fa-info-circle"></i> Teoría
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('desarrolladores') }}">
+                <i class="fas fa-headset"></i> Contacto
+              </a>
+            </li>
+          </ul>
+          <div id="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+      </header>
+
+      <!--------------------------------------------------------------------------------------------------------------------->
+      <main class="main-content">
+        <div id="calculator"></div>
+      </main>
+
+      <div style="margin-left: 40px">
+        <div style="margin-bottom: 2rem">
+          <br />
+          <label for="formula">Escribí tu función:</label><br />
+          <math-field id="formula" virtual-keyboard-mode="manual"
+            >f(x)=</math-field
+          >
+          <div id="keyboard-container"></div>
+        </div>
+
+        <div style="margin-bottom: 2rem">
+          <label for="intervalo1">Intervalo 1 (opcional):</label>
+          <input type="number" id="intervalo1" placeholder="Ej. -10" />
+        </div>
+
+        <div style="margin-bottom: 2rem">
+          <label for="intervalo2">Intervalo 2 (opcional):</label>
+          <input type="number" id="intervalo2" placeholder="Ej. 10" />
+        </div>
+
+        <button id="obtenerRaicesBtn" onclick="obtenerRaices()">
+          Obtener Raíces
+        </button>
+        <!-- Tabla para el vector de coordenadas -->
+        <div class="container mt-3">
+          <h4
+            class="text-center mb-3"
+            style="
+              font-size: 1.4rem;
+              font-weight: 600;
+              color: #6c5ce7;
+
+              padding-bottom: 5px;
+              margin-bottom: 20px;
+            "
+          >
+            Vector de Coordenadas
+          </h4>
+
+          <div style="overflow-y: auto; max-height: 350px">
+            <table
+              class="table table-bordered"
+              style="
+                font-size: 1rem;
+                width: auto;
+                margin: 0 auto;
+                border-collapse: collapse;
+              "
+            >
+              <thead style="background-color: #6c5ce7; color: white">
+                <tr>
+                  <th
+                    style="
+                      padding: 16px 28px;
+                      text-align: center;
+                      font-size: 1.4rem;
+                      font-weight: bold;
+                      min-width: 100px;
+                    "
+                  >
+                    #
+                  </th>
+                  <th
+                    style="
+                      padding: 16px 28px;
+                      text-align: center;
+                      font-size: 1.4rem;
+                      font-weight: bold;
+                      min-width: 160px;
+                    "
+                  >
+                    Raíz (X, Y)
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="vector-coords-body">
+                <!-- Las coordenadas se llenarán desde JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------------------------------------------------------------------------------------------------->
+
+      <footer>
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3>Sobre Nosotros</h3>
+            <p>Somos un equipo de desarrollo de la UCASAL</p>
+          </div>
+
+          <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('raices') }}">Calcular</a>
+            <a href="{{ url_for('teoria') }}">Teoría</a>
+            <a
+              href="https://wa.me/5493871234567?text=Hola%2C%20quiero%20hacer%20una%20consulta"
+              target="_blank"
+              >Contacto</a
+            >
+          </div>
+
+          <div class="footer-section">
+            <h3>Redes Sociales</h3>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          &copy; 2025 <strong>Solvr</strong>. Todos los derechos reservados.
+        </div>
+      </footer>
+    </div>
+
+
+
+    <script src="https://www.desmos.com/api/v1.6/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathlive@0.87.0/dist/mathlive.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Inicializar calculadora Desmos
+        const calculator = Desmos.GraphingCalculator(
+          document.getElementById("calculator"),
+          { expressions: false, settingsMenu: false, zoomButtons: true }
+        );
+
+        // Configurar MathLive con teclado virtual
+        const mf = document.getElementById("formula");
+        MathLive.makeSharedVirtualKeyboard({
+          virtualKeyboardContainer:
+            document.getElementById("keyboard-container"),
+          virtualKeyboardMode: "manual",
+        });
+
+        // Actualizar gráfico al cambiar la fórmula
+        function updateGraph() {
+          const latex = mf.value;
+          if (latex) {
+            calculator.setExpression({
+              id: "main",
+              latex,
+              color: "#6c5ce7",
+            });
+          }
+        }
+        mf.addEventListener("input", updateGraph);
+        mf.addEventListener("focus", () =>
+          MathLive.executeCommand("showVirtualKeyboard")
+        );
+        mf.focus();
+        updateGraph();
+        new ResizeObserver(() => calculator.resize()).observe(
+          document.getElementById("calculator")
+        );
+      });
+
+// Traduce LaTeX a notación de backend (sin espacios, con cos(...), etc.)
+function traducirLatex(latex) {
+  let s = latex
+    .trim()
+    .replace(/^f\(x\)\s*=\s*/, "")
+
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, "($1)/($2)") //division
+    .replace(/e\^\{([^}]+)\}/g, "np.e**($1)")
+    .replace(/\\pi/g, "pi")
+
+    // Funciones trigonométricas
+    .replace(/\\sin\s*\(?/g, "sin(")
+    .replace(/\\cos\s*\(?/g, "cos(")
+    .replace(/\\tan\s*\(?/g, "tan(")
+    .replace(/\\sec\s*\(?/g, "sec(")
+    .replace(/\\csc\s*\(?/g, "csc(")
+    .replace(/\\cot\s*\(?/g, "cot(")
+
+    // Logaritmos, exponenciales, raíces
+    .replace(/\\ln\s*\(?/g, "ln(")
+    .replace(/\\log\s*\(?/g, "log(")
+    .replace(/\\exp\s*\(?/g, "exp(")
+    .replace(/\\sqrt\s*\{([^}]+)\}/g, "sqrt($1)")
+    .replace(/\\left\|([^|]+)\\right\|/g, "abs($1)")
+
+    // Fracciones y paréntesis
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, "($1)/($2)")
+    .replace(/e\^\{([^}]+)\}/g, "e**($1)")
+    .replace(/\\left\(/g, "(")
+    .replace(/\\right\)/g, ")")
+
+    // Operadores
+    .replace(/\\cdot|\\times/g, "*")
+    .replace(/\\div/g, "/")
+    .replace(/\\pm/g, "±")
+    .replace(/\\mp/g, "∓")
+    .replace(/\^/g, "**")
+
+    // Multiplicación implícita
+    .replace(/(\d)([a-zA-Z])/g, "$1*$2")
+    .replace(/([a-zA-Z])(\d)/g, "$1*$2")
+
+    // Cierre de paréntesis de funciones
+    .replace(/(sin|cos|tan|sec|csc|cot|ln|log|exp)\(([^\)]+)/g, "$1($2)")
+
+    // Quitar espacios
+    .replace(/\s+/g, "");
+
+  return s;
+}
+
+
+
+
+      // Llamada al backend y llenado de tabla
+      async function obtenerRaices() {
+        const rawLatex = document.getElementById("formula").value;
+        const intervalo1 = document.getElementById("intervalo1").value;
+        const intervalo2 = document.getElementById("intervalo2").value;
+
+        if (!rawLatex || !intervalo1) {
+          alert("Debes ingresar la función y al menos el intervalo 1.");
+          return;
+        }
+
+        const funcion = traducirLatex(rawLatex);
+        console.log(funcion)
+        try {
+          const resp = await fetch("http://localhost:5000/resolver-raices", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ funcion, intervalo1, intervalo2 }),
+          });
+          const data = await resp.json();
+          console.log("Respuesta recibida:", data);
+
+          if (!data.raices || !Array.isArray(data.raices)) {
+            console.error("No se encontraron raíces en la respuesta.");
+            return;
+          }
+
+          // Rellenar tabla con cada string "(x, y)" tal cual viene
+          const tbody = document.getElementById("vector-coords-body");
+          tbody.innerHTML = "";
+          data.raices.forEach((textoRaiz, i) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td style="padding:8px;text-align:center">${i + 1}</td>
+              <td style="padding:8px;text-align:center">${textoRaiz}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } catch (err) {
+          console.error("Error en la petición:", err);
+          alert("Ocurrió un error al calcular las raíces.");
+        }
+      }
+    </script>
+  </body>
+</html>

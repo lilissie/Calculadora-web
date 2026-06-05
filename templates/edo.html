@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <!-- style -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+    />
+    <link rel="icon" href="static/logo.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="static/styleP2.css" />
+    <!-- style -->
+    <title>Ecuaciones Diferenciales</title>
+    <script src="https://unpkg.com/mathlive"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="layout-container"> 
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" />
+                <h1><a class="inicio" href="{{ url_for('inicio') }}">Solvr</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('inicio') }}"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="fas fa-calculator"></i> Calcular <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('sistemas_ecuaciones') }}"><i class="fas fa-project-diagram"></i> Sistema de ecuaciones</a>
+                        <a href="{{ url_for('raices') }}"><i class="fas fa-square-root-alt"></i> Raíces de una función</a>
+                        <a href="{{ url_for('integracion') }}"><i class="fas fa-chart-area"></i> Integración numérica</a>
+                        <a href="{{ url_for('edo') }}"><i class="fas fa-wave-square"></i> Ecuaciones diferenciales</a>
+                    </div>
+                </li>
+                <li><a href="{{ url_for('teoria') }}"><i class="fas fa-info-circle"></i> Teoría</a></li>
+                <li>
+                    <a href="{{ url_for('desarrolladores') }}">
+                    <i class="fas fa-headset"></i> Contacto
+                    </a>
+                </li>
+            </ul>
+            <div id="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <br><br><br>
+    <h3 id="title">Ecuaciones Diferenciales</h3>
+    <div id="main-container">
+
+        <form method="post">
+
+            <label for="formula">Escriba su función f(x, y):</label>
+            <math-field style="width: 30em;" id="formula" virtual-keyboard-mode="manual">f(x,y)=</math-field>
+            <div id="keyboard-container"></div>
+            <div class="limites-container">
+                <div>
+                    <label for="x0">x inicial (x₀):</label>
+                    <input type="number" step="any" name="x0" required>
+                </div>
+                <div>
+                    <label for="y0">y inicial (y₀):</label>
+                    <input type="number" step="any" name="y0" required>
+                </div>
+                <div>
+                    <label for="xf">x final (xₙ):</label>
+                    <input type="number" step="any" name="xf" required>
+                </div>
+
+            </div>
+            
+            <div class="limites-container">
+                <div>
+                    <label for="n">Cantidad de pasos (n):</label>
+                    <input type="number" name="n" required><br>
+                </div>
+                <div>
+
+                    <label for="metodo">Método:</label>
+                    <select name="metodo" required>
+                        <option value="euler">Euler</option>
+                        <option value="rk4">Runge-Kutta 4</option>
+                    </select><br><br>
+                </div>
+            </div>
+            <button type="submit">Calcular</button>
+        </form>
+    
+        <div id="resultado"><h3>Resultados:</h3></div>
+    </div>
+
+    <script>
+        function traducirLatexEDO(latex) {
+            return latex
+                .trim()
+                .replace(/^f\(x,y\)\s*=\s*/, "")
+                .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, "($1)/($2)")
+                .replace(/e\^\{([^}]+)\}/g, "Math.exp($1)")
+                .replace(/\\pi/g, "Math.PI")
+                .replace(/\\sqrt\{([^}]+)\}/g, "Math.sqrt($1)")
+                .replace(/\\left\(|\\right\)/g, "")
+                .replace(/\\cdot|\\times/g, "*")
+                .replace(/\\div/g, "/")
+                .replace(/\^/g, "**")
+                .replace(/([a-zA-Z])(\d)/g, "$1*$2")
+                .replace(/(\d)([a-zA-Z])/g, "$1*$2")
+                .replace(/\s+/g, "");
+        }
+
+        async function calcularEDO() {
+            const rawLatex = document.getElementById('formula').getValue();
+            const funcion = traducirLatexEDO(rawLatex);
+            const x0 = parseFloat(document.querySelector('input[name="x0"]').value);
+            const y0 = parseFloat(document.querySelector('input[name="y0"]').value);
+            const xf = parseFloat(document.querySelector('input[name="xf"]').value);
+            const n = parseInt(document.querySelector('input[name="n"]').value);
+            const metodo = document.querySelector('select[name="metodo"]').value;
+
+
+            try {
+                const resp = await fetch('/edo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ funcion, x0, y0, xf, n, metodo }),
+                });
+
+                const data = await resp.json();
+                const contenedor = document.getElementById("resultado");
+                contenedor.innerHTML = "";
+
+                if (data.error) {
+                    contenedor.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                    return;
+                }
+
+                const resultados = data.resultados.map(p => `x: ${p.x.toFixed(4)}, y: ${p.y.toFixed(6)}`).join("<br>");
+                contenedor.innerHTML = `<h3>Resultados:</h3><p>${resultados}</p>`;
+
+            } catch (err) {
+                console.error(err);
+                alert("Error al resolver la EDO.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('form').addEventListener('submit', e => {
+                e.preventDefault();
+                calcularEDO();
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

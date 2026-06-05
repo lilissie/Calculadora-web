@@ -1,0 +1,59 @@
+/* Contenedor padre que contiene form y resultados */
+#main-container {
+  display: flex;
+  justify-content: center; /* centra horizontalmente el contenedor */
+  gap: 1rem; /* espacio entre columnas */
+  max-width: 2000px; /* ancho máximo para no llenar toda la pantalla */
+  padding: 1rem;
+  margin: 0em 3em;
+}
+
+/* Cada columna toma menos de la mitad para que haya espacio entre ellos */
+#main-container > form,
+#resultado {
+  flex: 1 1 45%;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid #ddd; /* opcional, para visualizar bordes */
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  min-height: 300px; /* para que no se achique mucho */
+}
+
+/* Opcional: para que los inputs y labels se vean mejor alineados y organizados */
+form label {
+  display: block;
+}
+
+form input, form select {
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Para el botón */
+form button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+}
+
+form input[type="number"] {
+  width: 8em;
+}
+#title{
+    margin-left: 2em;
+    font-size: 2em;
+}
+/* ---------------------------- */
+
+
+.limites-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.limites-container > div {
+  display: flex;
+  flex-direction: column;
+}

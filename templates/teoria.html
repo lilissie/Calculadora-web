@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teoria</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="icon" href="static/logo.ico" type="image/x-icon" />
+    <script src="{{ url_for('static', filename='js_co/index.js') }}"></script>
+  </head>
+  <body>
+    <div class="layout-container">
+      <header id="h-teo" class="header">
+        <nav class="navbar">
+          <div class="logo">
+            <img
+              src="{{ url_for('static', filename='logo.png') }}"
+              alt="Logo"
+            />
+            <h1>
+              <a class="inicio" href="{{ url_for('inicio') }}">
+              Solvr
+              </a>
+            </h1>
+          </div>
+          <ul class="nav-links">
+            <li>
+              <a href="{{ url_for('inicio') }}">
+                <i class="fas fa-home"></i> Inicio
+              </a>
+            </li>
+            <li class="dropdown">
+              <a href="#">
+                <i class="fas fa-calculator"></i> Calcular
+                <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="dropdown-content">
+                <a href="{{ url_for('sistemas_ecuaciones') }}">
+                  <i class="fas fa-project-diagram"></i> Sistema de ecuaciones
+                </a>
+                <a href="{{ url_for('raices') }}">
+                  <i class="fas fa-square-root-alt"></i> Raíces de una función
+                </a>
+                <a href="{{ url_for('integracion') }}">
+                  <i class="fas fa-chart-area"></i> Integración numérica
+                </a>
+                <a href="{{ url_for('edo') }}">
+                  <i class="fas fa-wave-square"></i> Ecuaciones diferenciales
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <a href="{{ url_for('teoria') }}">
+                <i class="fas fa-info-circle"></i> Teoría
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('desarrolladores') }}">
+                <i class="fas fa-headset"></i> Contacto
+              </a>
+            </li>
+          </ul>
+          <div id="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+      </header>
+
+      <!-- Contenido Teoría -->
+
+      <main class="contenido-teoria">
+        <section class="teorico">
+          <h2>Marco Teórico</h2>
+          <article>
+            <h3>1. Raíces de una función</h3>
+            <p>
+              Resolver raíces de una función implica encontrar los valores de la
+              variable independiente (generalmente <em>x</em>) que hacen que la
+              función se anule, es decir, que <strong>f(x) = 0</strong>. Existen
+              distintos métodos para hacerlo:
+            </p>
+            <ul>
+              <li>
+                <strong>Gráficamente:</strong> Observando dónde la curva corta
+                el eje X.
+              </li>
+              <li>
+                <strong>Métodos numéricos:</strong> como <em>Bisección</em>,
+                <em>Newton-Raphson</em>, <em>Secante</em>.
+              </li>
+              <li>
+                <strong>Algebraicamente:</strong> cuando es posible resolver
+                directamente.
+              </li>
+            </ul>
+            <h4>Problemas comunes</h4>
+            <ul>
+              <li>
+                <strong>Interfaces obsoletas:</strong> GUIs poco intuitivas
+                dificultan el análisis visual.
+              </li>
+              <li>
+                <strong>Ineficiencia:</strong> Los métodos clásicos pueden ser
+                lentos o inestables en funciones complejas o con mal
+                condicionamiento.
+              </li>
+              <li>
+                <strong>Raíces múltiples y singularidades:</strong> Pueden pasar
+                desapercibidas si solo se buscan cambios de signo.
+              </li>
+              <li>
+                <strong>Baja precisión:</strong> Malas elecciones de parámetros
+                iniciales o funciones sin cambio de signo dificultan la
+                convergencia.
+              </li>
+              <li>
+                <strong>Error humano:</strong> Elección incorrecta del método o
+                del intervalo.
+              </li>
+            </ul>
+            <h4>Enfoque práctico propuesto</h4>
+            <ul>
+              <li>
+                <strong>Escaneo por divisiones:</strong> Identificar cambios de
+                signo y subdividir estratégicamente.
+              </li>
+              <li>
+                <strong>Detección de máximos y mínimos:</strong> Considerar
+                ceros posibles en extremos planos o funciones amortiguadas.
+              </li>
+              <li>
+                <strong>Uso combinado de métodos:</strong>
+                <ul>
+                  <li>
+                    Iniciar con <strong>bisección</strong> para garantizar
+                    convergencia.
+                  </li>
+                  <li>
+                    Si progresa, aplicar <strong>Newton-Raphson</strong> para
+                    acelerar.
+                  </li>
+                  <li>
+                    Si falla, usar
+                    <strong>interpolación cuadrática</strong> como respaldo.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Paralelizar con hilos:</strong> Ejecutar varias
+                subdivisiones en paralelo para mejorar la velocidad.
+              </li>
+            </ul>
+            <iframe
+              width="100%"
+              height="315"
+              src="https://www.youtube.com/embed/2FRSjC3lRtM"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+            <iframe
+              width="100%"
+              height="315"
+              src="https://www.youtube.com/embed/Sno1AsxXqvw"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </article>
+
+          <article>
+            <h3>2. Sistemas de ecuaciones lineales</h3>
+            <p>
+              Un sistema de ecuaciones lineales busca encontrar los valores de
+              las variables que satisfacen simultáneamente varias ecuaciones.
+              Estos sistemas son clave en ingeniería, economía y modelado
+              matemático. Métodos más utilizados:
+            </p>
+            <ul>
+              <li>
+                <strong>Gráfico:</strong> útil para hasta 3 variables, permite
+                interpretación visual.
+              </li>
+              <li>
+                <strong>Algebraico:</strong> sustitución, igualación o
+                reducción. Rápidos pero limitados.
+              </li>
+              <li>
+                <strong>Matrices:</strong> Gauss, Gauss-Jordan, matriz inversa,
+                LU. Más eficientes y sistemáticos.
+              </li>
+              <li>
+                <strong>Numéricos:</strong> para sistemas grandes: Jacobi,
+                Gauss-Seidel, métodos iterativos.
+              </li>
+            </ul>
+            <h4>Problemas frecuentes</h4>
+            <ul>
+              <li>
+                <strong>Mal condicionamiento:</strong> pequeños errores
+                numéricos generan grandes desviaciones.
+              </li>
+              <li>
+                <strong>Matrices singulares:</strong> sistemas sin solución o
+                con infinitas.
+              </li>
+              <li>
+                <strong>Lentitud en grandes sistemas:</strong> especialmente con
+                operaciones manuales.
+              </li>
+              <li>
+                <strong>Interfaces anticuadas:</strong> Poca visualización de
+                matrices o pasos del método.
+              </li>
+            </ul>
+            <h4>Sugerencias y mejoras</h4>
+            <ul>
+              <li>
+                <strong>Uso de librerías numéricas:</strong> como NumPy o
+                algoritmos optimizados.
+              </li>
+              <li>
+                <strong>Detección automática de singularidad:</strong> verificar
+                el determinante.
+              </li>
+              <li>
+                <strong>Visualizar los pasos:</strong> para enseñanza o
+                debugging.
+              </li>
+              <li>
+                <strong>Diseño responsive:</strong> permitir entrada y edición
+                de sistemas fácilmente.
+              </li>
+            </ul>
+            <iframe
+              width="100%"
+              height="315"
+              src="https://www.youtube.com/embed/5bZ1j6wom-0"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </article>
+        </section>
+
+        <section class="practico">
+          <h2>Marco Práctico</h2>
+          <p>
+            En nuestra app podés resolver problemas aplicando directamente los
+            métodos más usados:
+          </p>
+          <ul>
+            <li>
+              <i class="fas fa-square-root-alt"></i
+              ><strong>Raíces:</strong> ingresá una función y elegí el método a
+              aplicar.
+            </li>
+            <li>
+              <i class="fas fa-project-diagram"></i
+              ><strong>Sistemas:</strong> ingresá el sistema y seleccioná el
+              tipo de resolución (Gauss, reducción, etc.).
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer>
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3>Sobre Nosotros</h3>
+            <p>Somos un equipo de desarrollo de la UCASAL</p>
+          </div>
+          <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('raices') }}">Calcular</a>
+            <a href="{{ url_for('teoria') }}">Teoría</a>
+            <a
+              href="https://wa.me/5493871234567?text=Hola%2C%20quiero%20hacer%20una%20consulta"
+              target="_blank"
+              >Contacto</a
+            >
+          </div>
+          <div class="footer-section">
+            <h3>Redes Sociales</h3>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2025 <strong>Solvr</strong>. Todos los derechos reservados.
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

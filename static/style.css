@@ -1,0 +1,801 @@
+/* ==================== VARIABLES ==================== */
+:root {
+  --primary-color: #6c5ce7;
+  --secondary-color: #a29bfe;
+  --dark-color: #2d3436;
+  --light-color: #f5f6fa;
+  --accent-color: #fd79a8;
+}
+
+/* Contenedor principal con grid layout */
+.layout-container {
+  display: grid;
+  min-height: 100dvh; /* Altura mínima del 100% del viewport dinámico */
+  grid-template-rows: auto 1fr auto; /* 3 filas: header - contenido - footer */
+}
+
+/* ==================== HEADER ==================== */
+.header {
+  grid-row: 1; /* Ocupa la primera fila */
+  background: #f8f9fa;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100px; /* Ajustada a una altura más apropiada */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más suave y notoria */
+  padding: 5px 5%; /* Espaciado ajustado */
+  border-radius: 0 0 20px 20px; /* Solo esquinas inferiores redondeadas */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-shrink: 0;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 30px; /* Ajusta según el espacio que quieres */
+}
+
+.logo img {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.logo h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Links de navegación */
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin: 1em;
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dark-color);
+  font-weight: 500;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.nav-links a i {
+  margin-right: 5px;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  padding: 12px 16px;
+  display: block;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+/* Hamburger (para móviles) */
+#hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+/* ==================== FOOTER UNIFICADO ==================== */
+.footer {
+  grid-row: 3;
+  background: #353535 !important; /* Fondo oscuro */
+  color: #6c5ce7; /* Texto en color claro */
+  padding: 2.5rem 0;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0 1.25rem;
+}
+
+.footer-section {
+  margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.625rem;
+  color: #6c5ce7; /* Color blanco para los títulos */
+}
+
+.footer-section h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3.125rem;
+  height: 0.125rem;
+  background: var(
+    --primary-color
+  ); /* Cambio el color de la línea a un tono más brillante */
+}
+
+.footer-section p,
+.footer-section a {
+  color: #505050; /* Texto en un gris más suave */
+  margin-bottom: 0.625rem;
+  display: block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  line-height: 1.6;
+}
+
+.footer-section a:hover {
+  color: var(--primary-color); /* Al pasar el ratón, cambia a color principal */
+  padding-left: 0.3125rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  font-size: 1.5rem;
+  color: #505050; /* Color blanco para los íconos sociales */
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  color: var(--primary-color); /* Cambio de color al pasar el ratón */
+  transform: translateY(-0.1875rem);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.1);
+  font-size: 0.875rem;
+  color: #757575; /* Gris suave para la sección de copyright */
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+#calculator {
+  flex: 1; /* Hace que ocupe todo el espacio disponible */
+  min-height: 400px; /* Altura mínima */
+  width: 100%;
+}
+
+.main-content {
+  padding: 0;
+  min-height: calc(100vh - 200px); /* Resta altura del header y footer */
+  height: 100%; /* Cambié "auto" por 100% para asegurar que ocupe toda la altura disponible */
+  overflow: visible; /* Permite que el contenido desborde sin ocultarlo */
+}
+
+/*---Main--*/
+main,
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+
+main {
+  overflow-y: auto; /* Permite el scroll vertical solo en 'main' */
+  padding: 20px;
+  padding-bottom: 300px; /* Espacio para el teclado */
+  background: #f4f4f4; /* Solo para que veas dónde está */
+}
+
+/* Agregar margen al contenido principal */
+main.contenido-teoria {
+  margin-top: 100px; /* Ajusta el valor según el tamaño de tu header */
+}
+
+/*demas*/
+
+
+/* === FORMULARIO DE FUNCIONES === */
+
+.formula-container {
+  margin-left: 2rem; /* Podés usar px o rem según prefieras */
+}
+#formula {
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1.1rem;
+  background-color: #f3f0ff;
+  color: var(--primary-color);
+  width: 100%;
+  max-width: 500px;
+  margin-top: 10px;
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+}
+
+label[for="formula"] {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#keyboard-container {
+  margin-top: 10px;
+}
+
+/* ==================== CONTENIDO PRINCIPAL ==================== */
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==================== TEORÍA ==================== */
+.contenido-teoria {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+  flex: 1; /* <-- Le dice que crezca */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 160px); /* Estimación: navbar + footer */
+}
+
+.contenido-teoria h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.contenido-teoria article {
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.contenido-teoria ul {
+  margin-left: 20px;
+  line-height: 1.9;
+}
+
+.video-section {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.video-section h3 {
+  margin-bottom: 10px;
+  color: var(--dark-color);
+}
+
+.video-wrapper iframe {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.video-placeholder {
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  text-align: center;
+  color: var(--dark-color);
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* === RESULTADOS === */
+p {
+  color: var(--dark-color);
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+p:first-of-type {
+  margin-top: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* Puedes aplicar un estilo especial a los párrafos de resultado si tienen una clase */
+p.resultado {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+h2 {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+/* Etiqueta del intervalo */
+.label-intervalo {
+  font-weight: bold;
+  color: #6c5ce7;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Inputs del intervalo */
+.input-intervalo {
+  padding: 8px;
+  margin-right: 10px;
+  width: 120px;
+  border: 2px solid #6c5ce7;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-intervalo:focus {
+  border-color: #a29bfe;
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+}
+
+/* Botón para obtener raíces */
+.boton-raices {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.boton-raices:hover {
+  background-color: #5e50d4;
+}
+/*vector de cordenadas*/
+/* Compactar las filas de la tabla */
+#vector-coords-body td,
+#vector-coords-body th,
+.table-sm td,
+.table-sm th {
+  padding: 2px 6px !important;
+  font-size: 12px;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+/* Estilo general del contenedor */
+.container.mt-2 {
+  max-width: 400px;
+  margin-top: 1rem !important;
+}
+
+/* Alineación y estilo del encabezado */
+.table thead th {
+  text-align: center;
+}
+
+/* Ajustar tamaño del título */
+h4.text-center.mb-2 {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem !important;
+}
+/* Contenedor de los intervalos */
+div {
+  margin-bottom: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos para los labels */
+label {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+/* Estilos para los inputs */
+input[type="number"] {
+  width: 10%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #6c5ce7;
+  border-radius: 8px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #f8f9fa;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #6c5ce7;
+  box-shadow: 0 0 8px rgba(108, 92, 247, 0.3);
+}
+
+/* Estilos para los placeholders */
+input[type="number"]::placeholder {
+  color: #aaa;
+}
+
+/* Estilos para los inputs cuando están en focus */
+input[type="number"]:focus::placeholder {
+  color: transparent;
+}
+
+/* Sombra al pasar el cursor */
+input[type="number"]:hover {
+  background-color: #e9ecef;
+}
+
+/* Animación para los labels */
+label:hover {
+  color: #6c5ce7;
+}
+/* Estilos para el botón */
+button {
+  background-color: #6c5ce7; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 12px 24px; /* Espaciado interior */
+  font-size: 1.2rem; /* Tamaño de texto */
+  font-weight: 600; /* Negrita */
+  border-radius: 8px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor en forma de mano */
+  transition: all 0.3s ease; /* Transiciones suaves */
+  width: 100%; /* Ancho completo */
+  max-width: 300px; /* Ancho máximo */
+  margin: 1rem auto; /* Espaciado automático */
+  display: block; /* Centrado */
+}
+
+/* Efecto cuando el botón está en foco */
+button:focus {
+  outline: none; /* Quitar borde de enfoque */
+  box-shadow: 0 0 10px rgba(108, 92, 247, 0.5); /* Sombra al foco */
+}
+
+/* Efecto cuando se pasa el cursor por encima */
+button:hover {
+  background-color: #5a4fe1; /* Color más oscuro al pasar el cursor */
+  transform: scale(1.05); /* Agrandar un poco el botón */
+}
+
+/* Efecto cuando se presiona el botón */
+button:active {
+  background-color: #4e44d2; /* Color al presionar */
+  transform: scale(0.98); /* Reducir el tamaño ligeramente */
+}
+
+/* Asegurarte de que el header no esté en posición fija si no lo necesitas */
+header {
+  position: relative;
+  z-index: 10;
+}
+
+.titulo-sistema {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #6c5ce7; /* Morado elegante */
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.solutions-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-top: 15px;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: "Courier New", monospace;
+  transition: all 0.3s ease;
+}
+
+.solutions-container:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.solution-step {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+.solution-step-title {
+  font-weight: bold;
+  color: #2980b9;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.solution-matrix {
+  background-color: white;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: "Courier New", monospace;
+  white-space: pre;
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
+
+.final-solution {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #e8f4fd;
+  border-left: 6px solid #3498db;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.variable {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.value {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Estilo para resaltar el texto de solución */
+.highlight {
+  background-color: #f1c40f;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Contenedor de imágenes con redirección */
+.image-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+  margin-top: 4rem; /* Bajado más del header */
+}
+
+/* Estilo de las imágenes */
+.image-links a img {
+  width: 400px;
+  height: 500px;
+  object-fit: contain; /* Que se vea completa */
+  background-color: #fff; /* Evita fondo negro si no ocupa todo */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  image-rendering: auto;
+  -webkit-optimize-contrast: true; /* Mejora calidad en navegadores WebKit */
+}
+
+/* Hover */
+.image-links a img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 🎇 Efecto neón */
+.image-links a img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #6c5ce7, 0 0 10px #6c5ce7, 0 0 25px #6c5ce7;
+  filter: brightness(1.1) saturate(1.3);
+}
+
+
+/* ------------------------------------------------------------------- */
+.inicio{
+  text-decoration: none;
+  color: inherit;
+}
+
+/* CENTRAR las imágenes SIEMPRE */
+.image-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap; /* Se acomodan si no entra todo en una línea */
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Para que las imágenes no exploten en pantalla chica */
+.image-links img {
+  max-width: 100%;
+  height: auto;
+  width: 180px; /* o el tamaño que quieras */
+  transition: transform 0.3s;
+}
+
+.image-links img:hover {
+  transform: scale(1.05);
+}
+
+/* NAVBAR RESPONSIVE */
+.navbar {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 10px 5%;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Para que no se rompa en pantallas pequeñas */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* LOGO + TÍTULO responsive */
+.logo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo img {
+  max-height: 50px;
+  height: auto;
+}
+
+
+/* QUITAR subrayado del link del título */
+.inicio {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HEADER adaptativo */
+.header {
+  background: #f8f9fa;
+  padding: 1rem 5%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 80px;
+}
+
+
+/* LAYOUT general */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer-container{
+  padding-top: 15em;
+}
+
+/* Oculta el menú en pantallas pequeñas por defecto */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+
+/* Mostrar hamburguesa solo en mobile */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  color: #333;
+}
+/* ==================== RESPONSIVE ==================== */
+  @media (max-width: 992px) {
+    
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      right: 10px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+  
+    .nav-links.show {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+      cursor: pointer;
+    }
+    
+    .navbar {
+      padding: 15px 20px;
+    }
+    
+    
+    .logo h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+    
+    .main-content {
+      padding: 0;
+      min-height: calc(80vh - 190px); /* Resta altura del header y footer */
+      height: 100%; /* Cambié "auto" por 100% para asegurar que ocupe toda la altura disponible */
+      overflow: visible; /* Permite que el contenido desborde sin ocultarlo */
+    }
+
+    #hamburger {
+      display: block;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+    
+    
+  }

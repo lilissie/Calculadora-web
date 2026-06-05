@@ -1,0 +1,20 @@
+raiz
+-2,2
+(np.sqrt(np.cos(x)) * np.cos(40*x) + np.sqrt(abs(x)) - 0.7) * (4 - x*x)**0.01
+
+eq
+Problema : 
+2 1 8
+1 -4 -5
+Sol 3 2
+
+-------------------------------
+
+$$ \sin\left(\pi^3x\right)\cdot\sqrt{\frac{e^2-x^2}{2}}+\sqrt{\left|x\right|} $$
+
+sin((\pi**3*x))*sqrt(\frac{e**2-x**2){2}}+sqrt(abs*(x))
+
+sin((\pi**3*x))*sqrt((e**2-x**2)/(2))+sqrt(abs*(x))
+
+
+sin((np.pi**3*x))*sqrt((e**2-x**2)/(2))+sqrt(abs*(x))

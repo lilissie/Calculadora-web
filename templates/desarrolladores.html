@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Desarrolladores</title>
+
+    <!-- style -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="icon" href="static/logo.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="static/style.css" />
+    <!-- style -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 280px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 0;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .card img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .card .info {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<header id="h-teo" class="header">
+    <nav class="navbar">
+        <div class="logo">
+            <img
+            src="{{ url_for('static', filename='logo.png') }}"
+            alt="Logo"
+            />
+            <h1>
+            <a class="inicio" href="{{ url_for('inicio') }}">
+            Solvr
+            </a>
+            </h1>
+            </div>
+            <ul class="nav-links">
+            <li>
+                <a href="{{ url_for('inicio') }}">
+                <i class="fas fa-home"></i> Inicio
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#">
+                <i class="fas fa-calculator"></i> Calcular
+                <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="dropdown-content">
+                <a href="{{ url_for('sistemas_ecuaciones') }}">
+                    <i class="fas fa-project-diagram"></i> Sistema de ecuaciones
+                </a>
+                <a href="{{ url_for('raices') }}">
+                    <i class="fas fa-square-root-alt"></i> Raíces de una función
+                </a>
+                <a href="{{ url_for('integracion') }}">
+                    <i class="fas fa-chart-area"></i> Integración numérica
+                </a>
+                <a href="{{ url_for('edo') }}">
+                    <i class="fas fa-wave-square"></i> Ecuaciones diferenciales
+                </a>
+                </div>
+            </li>
+
+            <li>
+                <a href="{{ url_for('teoria') }}">
+                <i class="fas fa-info-circle"></i> Teoría
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('desarrolladores') }}">
+                <i class="fas fa-headset"></i> Contacto
+                </a>
+            </li>
+            </ul>
+            <div id="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='emi.jpg') }}" alt="Foto desarrollador" width="220" height="220">
+            <h3>Emiliano Javier Aguirre</h3>
+            <p class="info">📧 Email: aguirreemiliano175@gmail.com</p>
+            <p>"Soy una persona que sigue adelante, sin importar las adversidades que encuentre en el camino."</p>
+        </div>
+        
+        <div class="card">
+            <img src="{{ url_for('static', filename='pablo.jpg') }}" alt="Foto desarrollador" width="220" height="220">
+            <h3>Pablo Celaya </h3>
+            <p class="info">📧 Email: pablocelayarios@gmail.com </p>
+            <p>"De día, soy estudiante; de noche, doy vida a mis ritmos."</p>
+        </div>
+        
+        <div class="card">
+            <img src="{{ url_for('static', filename='caro.jpg') }}" alt="Foto desarrollador" width="220" height="220">
+            <h3>Carolina Rojas</h3>
+            <p class="info">📧 Email: carolinarojas.gr25@gmail.com</p>
+            <p>“Mi creatividad no se limita al escenario ni al código.”</p>
+        </div>
+        
+        <div class="card">
+            <img src="{{ url_for('static', filename='carlitos.jpg') }}" alt="Foto desarrollador" width="220" height="220">
+            <h3>Carlos Nicolás Wagner</h3>
+            <p class="info">📧 Email: carlosnicolasw@gmail.com</p>
+            <p>"Soy una persona que trabaja con determinación y sin parar hasta lograr los objetivos"</p>
+        </div>
+
+    </div>
+</body>
+</html>

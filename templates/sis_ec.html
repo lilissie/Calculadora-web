@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solvr</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- MathLive -->
+    <script src="https://unpkg.com/mathlive"></script>
+    <!-- Desmos -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://www.desmos.com/api/v1.6/core.js"></script>
+    <script src="https://www.desmos.com/api/v1.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <link rel="icon" href="static/logo.ico" type="image/x-icon">
+    <script src="{{ url_for('static', filename='js_co/index.js') }}"></script>
+  </head>
+  <body>
+    <div class="layout-container">
+      <header class="header">
+        <nav class="navbar">
+          <div class="logo">
+            <img
+              src="{{ url_for('static', filename='logo.png') }}"
+              alt="Logo"
+            />
+            <h1>
+              <a class="inicio" href="{{ url_for('inicio') }}">
+              Solvr
+              </a>
+            </h1>
+          </div>
+          <ul class="nav-links">
+            <li>
+              <a href="{{ url_for('inicio') }}"
+                ><i class="fas fa-home"></i> Inicio</a
+              >
+            </li>
+            <li class="dropdown">
+              <a href="#">
+                <i class="fas fa-calculator"></i> Calcular
+                <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="dropdown-content">
+                <a href="{{ url_for('sistemas_ecuaciones') }}">
+                  <i class="fas fa-project-diagram"></i> Sistema de ecuaciones
+                </a>
+                <a href="{{ url_for('raices') }}">
+                  <i class="fas fa-square-root-alt"></i> Raíces de una función
+                </a>
+                <a href="{{ url_for('integracion') }}">
+                  <i class="fas fa-chart-area"></i> Integración numérica
+                </a>
+                <a href="{{ url_for('edo') }}">
+                  <i class="fas fa-wave-square"></i> Ecuaciones diferenciales
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <a href="{{ url_for('teoria') }}">
+                <i class="fas fa-info-circle"></i> Teoría
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('desarrolladores') }}">
+                <i class="fas fa-headset"></i> Contacto
+              </a>
+            </li>
+          </ul>
+          <div id="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+      </header>
+
+      <!-------------------------------------------------------------------------------------------------------------------->
+      <main style="overflow: visible; max-height: none">
+        <br />
+        <br />
+        <h2 class="titulo-sistema">Sistema de Ecuaciones</h2>
+
+        <!-- Ingreso libre de cantidad de incógnitas -->
+        <div class="form-group">
+          <label for="numVariables">Cantidad de incógnitas:</label>
+          <input
+            type="number"
+            id="numVariables"
+            class="form-control w-auto"
+            min="1"
+            max="100"
+            value="2"
+            onchange="generarMatriz()"
+          />
+          <small class="form-text text-muted">
+            Ingrese la cantidad de variables del sistema (n).
+          </small>
+        </div>
+
+        <!-- Selección del método -->
+        <div class="form-group">
+          <label for="metodo">Seleccione el método:</label>
+          <select id="metodo" class="form-control">
+            <option value="gauss">Gauss</option>
+            <option value="gauss-jordan">Gauss-Jordan</option>
+            <option value="gauss-seidel">Gauss-Seidel</option>
+            <option value="jacobi">Jacobi</option>
+          </select>
+          <small class="form-text text-muted"
+            >Seleccione el método de resolución.</small
+          >
+        </div>
+
+        <!-- Contenedor para la matriz -->
+        <div id="matrizContainer" class="mt-4"></div>
+
+        <!-- Botón para resolver -->
+        <button
+          id="obtenerRaicesBtn"
+          onclick="resolverSistema()"
+          class="btn btn-primary"
+        >
+          Resolver
+        </button>
+        <small class="form-text text-muted d-block">
+          Presione para calcular las soluciones
+        </small>
+
+        <div id="resultado" class="mt-4">
+          <h5>Resultado:</h5>
+          <div class="solutions-container card">
+            <div class="card-body">
+              <!-- Las soluciones aparecerán aquí -->
+            </div>
+          </div>
+        </div>
+        
+        
+
+      <script>
+        function generarMatriz() {
+          const n = parseInt(document.getElementById("numVariables").value);
+          if (isNaN(n) || n < 1 || n > 100) {
+            alert(
+              "Por favor, ingrese un número válido de incógnitas (entre 1 y 100)."
+            );
+            return;
+          }
+
+          const container = document.getElementById("matrizContainer");
+          container.innerHTML = "";
+
+          const table = document.createElement("table");
+          table.classList.add("table", "table-bordered", "text-center");
+
+          for (let i = 0; i < n; i++) {
+            const row = document.createElement("tr");
+
+            for (let j = 0; j < n + 1; j++) {
+              const cell = document.createElement("td");
+              const input = document.createElement("input");
+              input.type = "number";
+              input.classList.add("form-control");
+              input.style.width = "80px";
+              input.placeholder =
+                j === n ? "ind" + (i + 1) : "x" + (i + 1) + (j + 1);
+              input.setAttribute("data-row", i);
+              input.setAttribute("data-col", j);
+              cell.appendChild(input);
+              row.appendChild(cell);
+            }
+
+            table.appendChild(row);
+          }
+
+          container.appendChild(table);
+        }
+
+        function resolverSistema() {
+          const n = parseInt(document.getElementById("numVariables").value);
+          const metodo = document.getElementById("metodo").value; // Obtener el método seleccionado
+          const matriz = [];
+
+          for (let i = 0; i < n; i++) {
+            const fila = [];
+            for (let j = 0; j < n + 1; j++) {
+              const input = document.querySelector(
+                `input[data-row="${i}"][data-col="${j}"]`
+              );
+              fila.push(parseFloat(input.value));
+            }
+            matriz.push(fila);
+          }
+
+          console.log("📊 Matriz ingresada:", matriz);
+          console.log("Método seleccionado:", metodo);
+
+          fetch("http://localhost:5000/resolver-sistema", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ matriz, metodo }), // Enviar el método junto con la matriz
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("✅ Respuesta del backend:", data);
+              const container = document.querySelector(".solutions-container");
+              container.innerHTML = "";
+
+              // Aquí es donde mostramos el texto con los pasos
+              if (data.soluciones) {
+                const pre = document.createElement("pre");
+                pre.style.backgroundColor = "#f7f7f7";
+                pre.style.padding = "10px";
+                pre.style.borderRadius = "5px";
+                pre.textContent = data.soluciones; // Colocamos el texto recibido en el contenedor
+                container.appendChild(pre);
+              } else {
+                container.innerHTML =
+                  "<p>No se pudieron encontrar soluciones.</p>";
+              }
+            })
+            .catch((err) => {
+              console.error("❌ Error al enviar la matriz:", err);
+              document.getElementById("resultado").innerHTML =
+                '<p class="text-danger">Hubo un error al enviar la matriz.</p>';
+            });
+        }
+
+        // Inicializa con 2x2
+        window.onload = generarMatriz;
+      </script>
+
+      <!--------------------------------------------------------------------------------------------------------------------->
+
+      <footer>
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3>Sobre Nosotros</h3>
+            <p>Somos un equipo de desarrollo de la UCASAL</p>
+          </div>
+
+          <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('raices') }}">Calcular</a>
+            <a href="{{ url_for('teoria') }}">Teoría</a>
+            <a
+              href="https://wa.me/5493871234567?text=Hola%2C%20quiero%20hacer%20una%20consulta"
+              target="_blank"
+              >Contacto</a
+            >
+          </div>
+
+          <div class="footer-section">
+            <h3>Redes Sociales</h3>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          &copy; 2025 <strong>Solvr</strong>. Todos los derechos reservados.
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://www.desmos.com/api/v1.6/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathlive@0.87.0/dist/mathlive.min.js"></script>
+  </body>
+</html>
